@@ -15,8 +15,8 @@ import locationActive from '@a/images/location-active.png'
 import more from '@a/images/more.png'
 import moreActive from '@a/images/more-active.png'
 
-import CookBook from './cookbook/CookBook'
-
+import CookBook from './cookbook/container/CookBook'
+import { Category } from './category'
 
 export default class Home extends Component {
 	state = {
@@ -83,7 +83,7 @@ export default class Home extends Component {
               });
             }}
           >
-						<div>category</div>
+						<Category></Category>
           </TabBar.Item>
           <TabBar.Item
             icon={

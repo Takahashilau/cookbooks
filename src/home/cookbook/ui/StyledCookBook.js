@@ -48,5 +48,41 @@ const HotCateWrap = styled.div `
     }
   }
 `
+const Top10Wrap = styled.div `
+h1 {
+  height: .5rem;
+  padding-left: .1rem;
+  color: #666;
+  line-height: .5rem;
+  font-weight: normal;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: .1rem;
+  li {
+    width: 50%;
+    padding-right: .1rem;
+    img {
+      width:100%;
+    }
+    > div:last-child {
+      display: flex;
+      flex-direction: column;
+      height: .6rem;
+      backgroud: #fff;
+      margin-bottom: .1rem;
+      justify-content: center;
+      align-items: center;
+      > p:first-child {
+        font-size: .18rem;
+      }
+      > p:last-child {
+        color: #666;
+      }
+    }
+  }
+}
+`
 
-export { Container, SwiperWrap, HotCateWrap }
+export { Container, SwiperWrap, HotCateWrap, Top10Wrap }
