@@ -1,23 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
-import { Top10Wrap } from './StyledCookBook';
+import { 
+  Top10Wrap,
+  SubTitle
+} from './StyledCookBook';
 
 const Top10 = (props) => {
   return (
     <Top10Wrap>
-      <h1>热门分类</h1>
+      <h1>精品好菜</h1>
       <ul>
         {
           props.list.map(value => {
             return (
-              <li key={value.id}>
+              <li 
+                key={value.id}
+                onClick={props.onGotoDetail(value.name)}
+              >
                 <div>
                   <img src={value.img} alt="" />
                 </div>
                 <div>
                   <p>{value.name}</p>
-                  <p><span>{value.all_click}</span>浏览 <span>{value.favorites}</span>收藏</p>
+                  <SubTitle
+                    line={1}
+                  ><span>{value.all_click}</span>浏览 <span>{value.favorites}</span>收藏</SubTitle>
                 </div>
               </li>
             )

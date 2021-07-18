@@ -1,11 +1,20 @@
-import React, { Component } from 'react'
-import Home from './home/Home'
-import './assets/styles/reset.css'
+import React from 'react'
+import { Route, Redirect } from 'react-router-dom'
 
-export default class App extends Component {
-	render() {
-		return (
-			<Home></Home>
-		)
-	}
+
+import { Home } from './home'
+import List from './list/List'
+import Detail from './detail/Detail'
+
+const App = (props) => {
+	return (
+		<>
+			<Route path="/home" children={props => <Home {...props}></Home>}></Route>
+			<Route path="/list" children={props => <List {...props}></List>}></Route>
+			<Route path="/detail" children={props => <Detail {...props}></Detail>}></Route>
+			<Redirect from="/" to="/home"></Redirect>
+		</>
+	)
 }
+
+export default App

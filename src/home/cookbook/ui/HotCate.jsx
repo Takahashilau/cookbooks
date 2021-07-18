@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import { HotCateWrap } from './StyledCookBook';
+import { withRouter } from 'react-router';
+import { 
+  HotCateWrap,
+  H1Container
+} from './StyledCookBook';
 import { Grid } from 'antd-mobile'
 
+@withRouter
 class HotCate extends Component {
   state = {
+    columnNum: 4,
     hotCateList: [
       {
         "img": "https://i3.meishichina.com/attachment/recipe/2015/09/16/c640_201509161442371783820.jpg?x-oss-process=style/c320",
@@ -52,12 +58,28 @@ class HotCate extends Component {
     ]
   }
 
+  componentDidMount() {
+    let width = window.innerWidth
+    if (width < 375) {
+      this.setState({
+        columnNum: 3
+      })
+    }
+  }
+
+  handleClick= ({title}) => {
+    let { history} = this.props
+    history.push('/list', { title, from: '/home' })
+  }
+
   render() {
     return (
       <HotCateWrap>
-        <h1>热门分类</h1>
+        <H1Container
+          width="0 0 1px 0"
+        >热门分类</H1Container>
         <Grid data={this.state.hotCateList}
-          columnNum={4}
+          columnNum={this.state.columnNum}
           hasLine={false}
           renderItem={dataItem => (
             <div className="grid-item">
@@ -67,6 +89,7 @@ class HotCate extends Component {
               </div>
             </div>
           )}
+          onClick={this.handleClick}
         />
       </HotCateWrap>
     );

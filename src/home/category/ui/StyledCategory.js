@@ -1,6 +1,12 @@
 import styled from 'styled-components'
+import border from '@a/styled/border'
+
+const NavUL = border(styled.ul ``)
 
 const CategoryWrap = styled.div `
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   nav {
     display: flex;
     align-items: center;
@@ -12,12 +18,11 @@ const CategoryWrap = styled.div `
       display: flex;
       width: 1.4rem;
       height: .3rem;
-      border: solid 1px #fff;
-      border-radius: .15rem;
       li {
         flex: 1;
         line-height: .3rem;
         text-align: center;
+        transition: all 200ms ease-in;
         &.active {
           color: #ee742f;
           z-index: 3;
@@ -39,5 +44,6 @@ const CategoryWrap = styled.div `
 `
 
 export {
-  CategoryWrap
+  CategoryWrap,
+  NavUL
 }

@@ -17,7 +17,9 @@ const loadDataAsync = () => {
   }
 }
 
-export {
+const actionCreater = {
   loadDataAsync,
   loadDataSync
 }
+
+export default actionCreater

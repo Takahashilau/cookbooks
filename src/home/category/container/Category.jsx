@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
-import { CategoryWrap } from './StyledCategory';
+import { connect } from 'react-redux'
+import { actionCreater as ac } from '@/home/category';
 
+import CategoryUI from '../ui/CategoryUI';
+
+@connect(
+  state => ({
+    cateType: state.category.routeInfo.cateType,
+    cateAside: state.category.routeInfo.cateAside
+  }),
+  dispatch => ({
+    changeCateType(type) {
+      dispatch(ac.changeCateType(type))
+    },
+    changeCateAside(cateAside) {
+      dispatch(ac.changeCateAside(cateAside))
+    }
+  })
+)
 class Category extends Component {
+  handleClick = (type) => {
+    return () => {
+      this.props.changeCateType(type)
+      this.props.changeCateAside(type === 'category' ? '热门' : '肉类')
+    }
+  }
+
   render() {
     return (
-      <CategoryWrap>
-        <nav>
-          <ul>
-            <li>分类</li>
-            <li>食材</li>
-            <li className="slide"></li>
-          </ul>
-        </nav>
-      </CategoryWrap>
+      <CategoryUI
+        type={this.props.cateType}
+        onCategoryUIClick={this.handleClick}
+      ></CategoryUI>
     );
   }
 }

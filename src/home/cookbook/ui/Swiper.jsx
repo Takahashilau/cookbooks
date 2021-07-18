@@ -13,7 +13,7 @@ const Swiper = (props) => {
       >
         {
           props.list.length > 0 && props.list.map(value => {
-            return <img key={value.id} src={value.img} alt="" />
+            return <img onClick={props.onGotoDetail(value.name)} key={value.id} src={value.img} alt="" />
           })
         }
       </Carousel>
