@@ -6,7 +6,7 @@ import { Home } from './home'
 import List from './list/List'
 import Detail from './detail/Detail'
 
-const App = (props) => {
+const App = () => {
 	return (
 		<>
 			<Route path="/home" children={props => <Home {...props}></Home>}></Route>

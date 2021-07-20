@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import memoize from 'memoize-one'
 
 import { Container } from './StyledCookBook';
@@ -36,8 +36,8 @@ const CookBookUI = (props) => {
   )
 }
 
-CookBookUI.propTypes = {
-  list: PropTypes.array
-}
+// CookBookUI.propTypes = {
+//   list: PropTypes.array
+// }
 
 export default CookBookUI

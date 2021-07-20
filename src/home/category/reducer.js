@@ -1,34 +1,21 @@
-const defaultState = {
+import { fromJS } from 'immutable'
+
+const defaultState = fromJS({
   routeInfo: {
     selectedTab: 'cookbook',
     cateType: 'category',
     cateAside: ''
   }
-}
+})
 
 const reducer = (state = defaultState, action) => {
   switch(action.type) {
     case 'changeSelectedTab':
-      return {
-        routeInfo:{
-          ...state.routeInfo,
-          selectedTab: action.selectedTab
-        }
-      }
+      return state.setIn(['routeInfo', 'selectedTab'], action.selectedTab)
     case 'changeCateType':
-      return {
-        routeInfo:{
-          ...state.routeInfo,
-          cateType: action.cateType
-        }
-      }
+      return state.setIn(['routeInfo', 'cateType'], action.cateType)
     case 'changeCateAside':
-      return {
-        routeInfo:{
-          ...state.routeInfo,
-          cateAside: action.cateAside
-        }
-      }
+      return state.setIn(['routeInfo', 'cateAside'], action.cateAside)
     default:
       return state
   }

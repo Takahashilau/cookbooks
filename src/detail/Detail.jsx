@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { useCallback } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 import animate from '../hoc/animate'
 
 import { 
@@ -8,21 +9,24 @@ import {
 
 import { DetailWrap } from './StyledDetail'
 
-@animate
-class Detail extends Component {
-  handleLeftClick = () => {
-    let { history } = this.props
-    let { from, listTitle } = this.props.location.state
-    history.push(from, {from: '/detail', title: listTitle})
-  }
-  
-  render() {
-    let state = this.props.location.state
+const Detail = () => {
+  const history = useHistory()
+  const location = useLocation()
+
+  const handleLeftClick = useCallback(
+    () => {
+      let { from, listTitle } = location.state
+      history.push(from, {from: '/detail', title: listTitle})
+    },
+    [history, location.state],
+  )
+
+  let state = location.state
     return (
       <DetailWrap>
         <NavBar
           icon={<Icon type="left"/>}
-          onLeftClick={this.handleLeftClick}
+          onLeftClick={handleLeftClick}
           style={{backgroundColor: '#ee742f'}}
         >{state && state.title}</NavBar>
         <div>
@@ -35,7 +39,6 @@ class Detail extends Component {
         </div>
       </DetailWrap>
     )
-  }
 }
 
-export default Detail
+export default animate(Detail)

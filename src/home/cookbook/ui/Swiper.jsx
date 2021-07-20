@@ -1,10 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 import { Carousel } from 'antd-mobile'
 import { SwiperWrap } from './StyledCookBook';
 
 const Swiper = (props) => {
+  const list = props.list.toJS()
   return (
     <SwiperWrap>
       <Carousel 
@@ -12,7 +13,7 @@ const Swiper = (props) => {
           infinite
       >
         {
-          props.list.length > 0 && props.list.map(value => {
+          list.length > 0 && list.map(value => {
             return <img onClick={props.onGotoDetail(value.name)} key={value.id} src={value.img} alt="" />
           })
         }
@@ -21,8 +22,8 @@ const Swiper = (props) => {
   );
 }
 
-Swiper.propTypes = {
-  list: PropTypes.array
-}
+// Swiper.propTypes = {
+//   list: PropTypes.array
+// }
 
 export default Swiper;

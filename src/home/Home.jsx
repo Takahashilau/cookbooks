@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { useState }from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { actionCreater as ac } from './category'
 import animate from '../hoc/animate'
 
@@ -24,140 +24,130 @@ import { Category } from './category'
 import Map from './map/Map'
 import { More } from './more'
 
-@animate
-@connect(
-  state => ({
-    checked: state.home.checked,
-    selectedTab: state.category.routeInfo.selectedTab
-  }),
-  dispatch => ({
-    changeSelectedTab(selectedTab) {
-      dispatch(ac.changeSelectedTab(selectedTab))
-    }
-  })
-)
-class Home extends Component {
-	state = {
-		selectedTab: this.props.selectedTab,
-		hidden: false,
+const Home = () => {
+  const category = useSelector(state => state.get('category'))
+  const home = useSelector(state => state.get('home'))
+  const checked = home.get('checked')
+  const dispatch = useDispatch()
+  
+  const [Tabs, setTabs] = useState({
+    selectedTab: category.getIn(['routeInfo', 'selectedTab']),
+    hidden: false,
 		fullScreen: true,
-	};
+  })
 
 
-
-  render() {
-      const tabItems = [
-      <TabBar.Item
-      title="美食大全"
-      key="cookbook"
-      icon={<div style={{
-        width: '22px',
-        height: '22px',
-        background: `url(${cookbook}) center center /  21px 21px no-repeat` }}
-      />
-      }
-      selectedIcon={<div style={{
-        width: '22px',
-        height: '22px',
-        background: `url(${cookbookActive}) center center /  21px 21px no-repeat` }}
-      />
-      }
-      selected={this.state.selectedTab === 'cookbook'}
-      onPress={() => {
-        this.setState({
-          selectedTab: 'cookbook',
-        });
-        this.props.changeSelectedTab('cookbook')
-      }}
+  const tabItems = [
+    <TabBar.Item
+    title="美食大全"
+    key="cookbook"
+    icon={<div style={{
+      width: '22px',
+      height: '22px',
+      background: `url(${cookbook}) center center /  21px 21px no-repeat` }}
+    />
+    }
+    selectedIcon={<div style={{
+      width: '22px',
+      height: '22px',
+      background: `url(${cookbookActive}) center center /  21px 21px no-repeat` }}
+    />
+    }
+    selected={Tabs.selectedTab === 'cookbook'}
+    onPress={() => {
+      setTabs({
+        selectedTab: 'cookbook',
+      });
+      dispatch(ac.changeSelectedTab('cookbook'))
+    }}
     >
       <CookBook></CookBook>
     </TabBar.Item>,
-      <TabBar.Item
-        icon={
-          <div style={{
-            width: '22px',
-            height: '22px',
-            background: `url(${menu}) center center /  21px 21px no-repeat` }}
-          />
-        }
-        selectedIcon={
-          <div style={{
-            width: '22px',
-            height: '22px',
-            background: `url(${menuActive}) center center /  21px 21px no-repeat` }}
-          />
-        }
-        title="分类"
-        key="category"
-        selected={this.state.selectedTab === 'category'}
-        onPress={() => {
-          this.setState({
-            selectedTab: 'category',
-          })
-          this.props.changeSelectedTab('category')
-        }}
-      >
-        <Category></Category>
-      </TabBar.Item>,
-      <TabBar.Item
-        icon={
-          <div style={{
-            width: '22px',
-            height: '22px',
-            background: `url(${location}) center center /  21px 21px no-repeat` }}
-          />
-        }
-        selectedIcon={
-          <div style={{
-            width: '22px',
-            height: '22px',
-            background: `url(${locationActive}) center center /  21px 21px no-repeat` }}
-          />
-        }
-        title="美食地图"
-        key="map"
-        selected={this.state.selectedTab === 'map'}
-        onPress={() => {
-          this.setState({
-            selectedTab: 'map',
-          });
-        }}
-      >
-        <Map></Map>
-      </TabBar.Item>,
-      <TabBar.Item
-        icon={{ uri: more }}
-        selectedIcon={{ uri: moreActive }}
-        title="更多"
-        key="more"
-        selected={this.state.selectedTab === 'more'}
-        onPress={() => {
-          this.setState({
-            selectedTab: 'more',
-          });
-        }}
-      >
+    <TabBar.Item
+      icon={
+        <div style={{
+          width: '22px',
+          height: '22px',
+          background: `url(${menu}) center center /  21px 21px no-repeat` }}
+        />
+      }
+      selectedIcon={
+        <div style={{
+          width: '22px',
+          height: '22px',
+          background: `url(${menuActive}) center center /  21px 21px no-repeat` }}
+        />
+      }
+      title="分类"
+      key="category"
+      selected={Tabs.selectedTab === 'category'}
+      onPress={() => {
+        setTabs({
+          selectedTab: 'category',
+        })
+        dispatch(ac.changeSelectedTab('category'))
+      }}
+    >
+      <Category></Category>
+    </TabBar.Item>,
+    <TabBar.Item
+      icon={
+        <div style={{
+          width: '22px',
+          height: '22px',
+          background: `url(${location}) center center /  21px 21px no-repeat` }}
+        />
+      }
+      selectedIcon={
+        <div style={{
+          width: '22px',
+          height: '22px',
+          background: `url(${locationActive}) center center /  21px 21px no-repeat` }}
+        />
+      }
+      title="美食地图"
+      key="map"
+      selected={Tabs.selectedTab === 'map'}
+      onPress={() => {
+        setTabs({
+          selectedTab: 'map',
+        });
+      }}
+    >
+      <Map></Map>
+    </TabBar.Item>,
+    <TabBar.Item
+      icon={{ uri: more }}
+      selectedIcon={{ uri: moreActive }}
+      title="更多"
+      key="more"
+      selected={Tabs.selectedTab === 'more'}
+      onPress={() => {
+        setTabs({
+          selectedTab: 'more',
+        });
+      }}
+    >
       <More></More>
-      </TabBar.Item>
-    ]
+    </TabBar.Item>
+  ]
 
-    return (
-      <div style={this.state.fullScreen ? { position: 'fixed', zIndex: 2, height: '100%', width: '100%', top: 0 } : { height: 400 }}>
-        <TabBar
-          unselectedTintColor="#949494"
-          tintColor="#000"
-          barTintColor="white"
-          hidden={this.state.hidden}
-        >
-          {
-            this.props.checked
-              ? tabItems.map(v => v)
-              : tabItems.filter((v, i) => i !== 2)
-          }
-        </TabBar>
-      </div>
-    )
-  }
+  return (
+    <div style={{ position: 'fixed', zIndex: 2, height: '100%', width: '100%', top: 0 }}>
+      <TabBar
+        unselectedTintColor="#949494"
+        tintColor="#000"
+        barTintColor="white"
+        hidden={Tabs.hidden}
+      >
+        {
+          checked
+            ? tabItems.map(v => v)
+            : tabItems.filter((v, i) => i !== 2)
+        }
+      </TabBar>
+    </div>
+  )
 }
 
-export default Home
+export default animate(Home)

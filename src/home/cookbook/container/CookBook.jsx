@@ -1,50 +1,21 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom';
+import React from 'react';
+import useGetState from './useGetState';
+import useGotoDetail from './useGotoDetail';
 
 import CookBookUI from '../ui/CookBookUI';
-import actionCreater from '../actionCreater';
 
-@withRouter
-@connect(
-  state => {
-    return {
-      list: state.cookbook.list
-    }
-  },
-  dispatch => ({
-    loadData() {
-      dispatch(actionCreater.loadDataAsync())
-    }
-    // return {
-    //   loadData: () => dispatch(actionCreater.loadDataAsync())
-    // }
-    //  与上面的写法区别在，外层不需要套括号。
-  })
-)
-class CookBook extends Component {
-  handleGotoDetail = (title) => {
-    return () => {
-      this.props.history.push('/detail', { title, from: '/home' })
-    }
-  }
 
-  render() {
-    return (
-      <CookBookUI
-        list={this.props.list}
-        onGotoDetail={this.handleGotoDetail}
-      ></CookBookUI>
-    )
-  }
+const CookBook = () => {
+  const cookbook = useGetState()
+  const handleGotoDetail = useGotoDetail()
 
-  componentDidMount() {
-    this.props.loadData()
-  }
 
-  componentDidUpdate() {
-    // console.log(this.props.list)
-  }
+  return (
+    <CookBookUI
+      list={cookbook.get('list')}
+      onGotoDetail={handleGotoDetail}
+    ></CookBookUI>
+  )
 }
 
 export default CookBook

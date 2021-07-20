@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 import { 
   Top10Wrap,
@@ -12,7 +12,7 @@ const Top10 = (props) => {
       <h1>精品好菜</h1>
       <ul>
         {
-          props.list.map(value => {
+          props.list.size > 0 && props.list.map(value => {
             return (
               <li 
                 key={value.id}
@@ -36,8 +36,8 @@ const Top10 = (props) => {
   );
 }
 
-Top10.propTypes = {
-  list: PropTypes.array
-}
+// Top10.propTypes = {
+//   list: PropTypes.array
+// }
 
 export default Top10;

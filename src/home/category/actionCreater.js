@@ -1,4 +1,5 @@
 const changeSelectedTab = (selectedTab) => {
+  console.log(selectedTab)
   return {
     type: 'changeSelectedTab',
     selectedTab
